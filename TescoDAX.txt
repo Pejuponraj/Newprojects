@@ -1,0 +1,19 @@
+Correlation sales Vs Revene(instore) = 
+VAR Meansales = AVERAGE(Tesco_Sales_Data[In-Store Sales Volume])
+VAR Meanrevenue=AVERAGE(Tesco_Sales_Data[In-Store Sales Revenue])
+
+VAR Numerater= SUMX(
+    Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Revenue]-Meanrevenue) *(
+    Tesco_Sales_Data[In-Store Sales Volume]-Meansales)
+
+)
+var Denamerater1=SUMX(Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Volume]-Meansales)^2)
+VAR Denamerater2 =SUMX(Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Revenue]-Meanrevenue)^2)
+
+ Var corr= DIVIDE(Numerater, SQRT(Denamerater1*Denamerater2))
+ RETURN 
+      "Correlatin between In store Sales Vs In store Revenue is :" & FORMAT( corr,"0.00")
+ 
+
+
+
