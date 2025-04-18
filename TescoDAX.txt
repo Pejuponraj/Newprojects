@@ -1,0 +1,40 @@
+1. Correlation sales Vs Revene(instore) = 
+VAR Meansales = AVERAGE(Tesco_Sales_Data[In-Store Sales Volume])
+VAR Meanrevenue=AVERAGE(Tesco_Sales_Data[In-Store Sales Revenue])
+
+VAR Numerater= SUMX(
+    Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Revenue]-Meanrevenue) *(
+    Tesco_Sales_Data[In-Store Sales Volume]-Meansales)
+
+)
+var Denamerater1=SUMX(Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Volume]-Meansales)^2)
+VAR Denamerater2 =SUMX(Tesco_Sales_Data, (Tesco_Sales_Data[In-Store Sales Revenue]-Meanrevenue)^2)
+
+ Var corr= DIVIDE(Numerater, SQRT(Denamerater1*Denamerater2))
+ RETURN 
+      "Correlatin between In store Sales Vs In store Revenue is :" & FORMAT( corr,"0.00")
+_____________________________________________________________________________________________
+
+
+2. Age Group = 
+  SWITCH(
+    TRUE(),
+    Tesco_Sales_Data[Customer Age] >=18 && Tesco_Sales_Data[Customer Age]<= 25 , "18+",
+    Tesco_Sales_Data[Customer Age] >=26 && Tesco_Sales_Data[Customer Age] <= 30, "25+",
+    Tesco_Sales_Data[Customer Age] >=31 && Tesco_Sales_Data[Customer Age] <= 35, "30+",
+    Tesco_Sales_Data[Customer Age] >=36 && Tesco_Sales_Data[Customer Age] <= 40, "35+",
+    Tesco_Sales_Data[Customer Age] >=41 && Tesco_Sales_Data[Customer Age] <= 45, "40+",
+    Tesco_Sales_Data[Customer Age] >=46 && Tesco_Sales_Data[Customer Age] <= 50, "45+",
+    Tesco_Sales_Data[Customer Age] >=51 && Tesco_Sales_Data[Customer Age] <= 55, "50+",
+    Tesco_Sales_Data[Customer Age] >=56 && Tesco_Sales_Data[Customer Age] <= 60, "55+",
+    Tesco_Sales_Data[Customer Age] >=61 , "6+",
+     "Other"
+
+
+)
+
+___________________________________________________________________________________________________
+ 
+
+
+
